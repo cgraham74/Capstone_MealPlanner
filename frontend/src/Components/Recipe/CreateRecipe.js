@@ -25,7 +25,7 @@ export default function CreateRecipe(props) {
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [ingredientUnit, setIngredientUnit] = useState("");
   const [category, setCategory] = useState("Category");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const location = useLocation();
 
   let saveRecipe = {
@@ -56,8 +56,8 @@ export default function CreateRecipe(props) {
   }
 
   function handleKeyDown(e) {
-    if (e.key === "Enter"){
-      addIngredients(e)
+    if (e.key === "Enter") {
+      addIngredients(e);
     }
   }
 
@@ -76,26 +76,24 @@ export default function CreateRecipe(props) {
     );
   }
 
-
   const imgFileHandler = (e) => {
     e.preventDefault();
+    console.log("on change value: " + e.target.value);
+    console.log("e.target.files[0]: " + e.target.files[0]);
     let selected = e.target.files[0];
     if (selected) {
       setImage(selected);
-        console.log("Selected: " + selected);
-        console.log("Logging Image "+ image.name + " Where from? " + image.URL);
-       File.Copy(image, `../../images/${image.name}`)
+     // File.Copy(image, `../../images/${image.name}`);
       const fileReader = new FileReader();
       fileReader.onChange = (e) => {
         const { result } = selected;
-        console.log("THis print?")
+        console.log("THis print?");
         console.log(result);
       };
-       fileReader.readAsDataURL(image);
+      fileReader.readAsDataURL(image);
     }
   };
 
-  
   const changeCategory = (e) => {
     setCategory(e.target.value);
   };
@@ -236,7 +234,6 @@ export default function CreateRecipe(props) {
                 name="ingredients"
                 type="text"
                 pattern="[a-zA-Z]*"
-               
                 placeholder={saveRecipe.ingredientList.name}
                 onChange={(e) => setIngredientName(e.target.value)}
                 value={ingredientName}
@@ -251,7 +248,6 @@ export default function CreateRecipe(props) {
                 type="text"
                 pattern="[0-9/.]*"
                 placeholder="Amount needed..."
-             
                 value={ingredientAmount}
                 onChange={(e) =>
                   setIngredientAmount((v) =>
@@ -310,7 +306,6 @@ export default function CreateRecipe(props) {
             </Button>
           </div>
         </Form>
-
       </div>
     </div>
   );

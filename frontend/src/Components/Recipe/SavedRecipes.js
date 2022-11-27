@@ -135,11 +135,10 @@ function RenderSavedRecipes({ recipeCard, updatedRecipe, token, imgUrls }) {
             <h3>{recipeCard.title}</h3>
           </CardTitle>
           <CardImg
-            alt="not found"
-            // src={fileExists() ? image : defaultImg }
+            alt={fileExists() ? recipeCard.imageUrl : "not found"}
             src={
               fileExists()
-                ? require(`../../images/${recipeCard.imageUrl}`).default
+                ? require(`../../images/${recipeCard.imageUrl}`)
                 : defaultImg
             }
           />

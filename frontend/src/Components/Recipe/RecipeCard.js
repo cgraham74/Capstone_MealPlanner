@@ -53,7 +53,7 @@ function RenderAllRecipes({ recipeCard, user, token, saveRecipe }) {
             alt="not found"
             src={
               fileExists()
-                ? require(`../../images/${recipeCard.imageUrl}`).default
+                ? require(`../../images/${recipeCard.imageUrl}`)
                 : defaultImg
             }
           />
