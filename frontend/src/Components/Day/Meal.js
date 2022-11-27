@@ -1,13 +1,17 @@
 import {useState, React} from 'react';
 import { Button } from 'reactstrap';
+import { useDispatch,useSelector } from 'react-redux';
+
+import { addMealPlan } from '../../Redux/actionCreators';
 
 export default function Meal(props) {
-  const { meal} = props;
+  const { meal} = props; 
   let [num, setNum] = useState(0);
 
   const [isAdded, setIsAdded] = useState(false);
   const [list, setList] = useState([]);
-
+  const dispatch = useDispatch();
+  
   const handleAddToCart = (e) => {
     // const product = { ...data, quantity: 1 };
     // addToCart(dispatch, product);
@@ -15,7 +19,10 @@ export default function Meal(props) {
     setList([...list, e.target.value]);
     list.map((item) => {
       alert(item + " " + num);
+      //dispatch(addMealPlan(item+num))
     });
+
+    
     setTimeout(() => {
       setIsAdded(false);
     }, 2500);
@@ -24,8 +31,8 @@ export default function Meal(props) {
   return (
     <div>
       {/* <img className="small" src={meal.image} alt={product.name} /> */}
-      <h3>{meal.title}</h3>
-      {/* <div>${meal.price}</div> */}
+      <h3>{meal}</h3>
+    
       <div>{IncDecCounter(num, setNum)}
                 <br /></div>
       <div>
@@ -33,7 +40,7 @@ export default function Meal(props) {
                   //className={!isAdded ? "" : "added"}
                   color="success"
                   type="button"
-                  value={meal.title}
+                  value={meal}
                   onClick={handleAddToCart}
                   disabled={num === 0}
                 >
@@ -58,6 +65,7 @@ function IncDecCounter(num, setNum) {
     };
     let handleChange = (e) => {
       setNum(e.target.value);
+      
     };
   
     return (

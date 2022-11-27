@@ -1,7 +1,7 @@
+/* eslint-disable default-case */
 import React from "react";
 import Navigator from "../navigation/Navigator";
 import { Link } from "react-router-dom";
-// import { useState } from "react";
 import yellowdot from "../../images/yellowdot.png";
 import bluedot from "../../images/bluedot.png";
 import greendot from "../../images/greendot.png";
@@ -10,47 +10,190 @@ import orangedot from "../../images/orangedot.png";
 import pinkdot from "../../images/pinkdot.png";
 import reddot from "../../images/reddot.png";
 import "./weeklyplanner.css";
-// import MovingText from "react-moving-text";
 import Accordion from "react-bootstrap/Accordion";
+import { Button, Table } from "reactstrap";
 
-export default function WeeklyPlanner() {
+
+export default function WeeklyPlanner(props) {
+
+  const displayMondayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Monday" && item.category === "Breakfast") {
+         return <>{item.recipename}</>;
+    }else {
+      return <></>;
+    }
+  });
+  const displayMondayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Monday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayMondayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Monday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    }else {
+      return <></>;
+    }
+  });
+  const displayTuesdayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Tuesday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    }else {
+      return <></>;
+    }
+  });
+  const displayTuesdayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Tuesday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    }else {
+      return <></>;
+    }
+  });
+  const displayTuesdayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Tuesday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    }else {
+      return <></>;
+    }
+  });
+  const displayWednesdayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Wednesday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayWednesdayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Wednesday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayWednesdayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Wednesday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+
+  const displayThursdayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Thursday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayThursdayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Thursday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayThursdayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Thursday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+
+  const displayFridayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Friday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayFridayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Friday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displayFridayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Friday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displaySaturdayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Saturday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displaySaturdayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Saturday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displaySaturdayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Saturday" && item.category === "Dinner") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+
+  const displaySundayBreakfast = props.mealselection.map((item) => {
+    if (item.dayofweek === "Sunday" && item.category === "Breakfast") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displaySundayLunch = props.mealselection.map((item) => {
+    if (item.dayofweek === "Sunday" && item.category === "Lunch") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+  const displaySundayDinner = props.mealselection.map((item) => {
+    if (item.dayofweek === "Sunday" && item.category=== "Dinner") {
+      return <>{item.recipename}</>;
+    } else {
+      return <></>;
+    }
+  });
+
   return (
-    <div  >
-      <Navigator/>
-      <div >
-        {/* <MovingText
-          type="effect3D"
-          duration="1000ms"
-          delay="0s"
-          direction="normal"
-          timing="ease"
-          iteration="infinite"
-          fillMode="none"
-        >
-         </MovingText> */}
-          <h3 id="weeklyplanner"> Weekly Planner</h3>
-       
-        </div>
-      <div className="weeklyplanner-container" >
+    <div>
+      <Navigator />
+      <div>
+        <h3 id="weeklyplanner"> Weekly Planner</h3>
+      </div>
+      <div className="weeklyplanner-container">
         <Accordion defaultActiveKey="1">
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="monday"
+              targetid="monday"
             >
               <img src={yellowdot} alt="large yellow dot" />
               &nbsp; &nbsp; Monday
             </Accordion.Header>
-            <Accordion.Body accordionId="monday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="monday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
+                    //testing day component
                     pathname: "/day",
-                    state: { day: "Monday", meal: "breakfast" },
+                    state: { day: "Monday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast: {displayMondayBreakfast}
                 </Link>
                 <br />
 
@@ -58,20 +201,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Monday", meal: "lunch" },
+                    state: { day: "Monday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch: {displayMondayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Monday", meal: "dinner" },
+                    state: { day: "Monday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner: {displayMondayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -81,21 +224,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="tuesday"
+              targetid="tuesday"
             >
               <img src={orangedot} alt="large orange dot" />
               &nbsp; &nbsp; Tuesday
             </Accordion.Header>
-            <Accordion.Body accordionId="tuesday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="tuesday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Tuesday", meal: "breakfast" },
+                    state: { day: "Tuesday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast :{displayTuesdayBreakfast}
                 </Link>
                 <br />
 
@@ -103,20 +246,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Tuesday", meal: "lunch" },
+                    state: { day: "Tuesday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displayTuesdayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Tuesday", meal: "dinner" },
+                    state: { day: "Tuesday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displayTuesdayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -126,21 +269,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="wednesday"
+              targetid="wednesday"
             >
               <img src={greendot} alt="large green dot" />
               &nbsp; &nbsp; Wednesday
             </Accordion.Header>
-            <Accordion.Body accordionId="wednesday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="wednesday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Wednesday", meal: "breakfast" },
+                    state: { day: "Wednesday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast : {displayWednesdayBreakfast}
                 </Link>
                 <br />
 
@@ -148,20 +291,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Wednesday", meal: "lunch" },
+                    state: { day: "Wednesday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displayWednesdayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Wednesday", meal: "dinner" },
+                    state: { day: "Wednesday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displayWednesdayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -171,21 +314,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="thursday"
+              targetid="thursday"
             >
               <img src={bluedot} alt="large blue dot" />
               &nbsp; &nbsp; Thursday
             </Accordion.Header>
-            <Accordion.Body accordionId="thursday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="thursday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Thursday", meal: "breakfast" },
+                    state: { day: "Thursday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast : {displayThursdayBreakfast}
                 </Link>
                 <br />
 
@@ -193,20 +336,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Thursday", meal: "lunch" },
+                    state: { day: "Thursday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displayThursdayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "Thursday", meal: "dinner" },
+                    state: { day: "Thursday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displayThursdayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -216,21 +359,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="friday"
+              targetid="friday"
             >
               <img src={purpledot} alt="large purple dot" />
               &nbsp; &nbsp; Friday
             </Accordion.Header>
-            <Accordion.Body accordionId="friday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="friday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "friday", meal: "breakfast" },
+                    state: { day: "Friday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast : {displayFridayBreakfast}
                 </Link>
                 <br />
 
@@ -238,20 +381,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "friday", meal: "lunch" },
+                    state: { day: "Friday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displayFridayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "friday", meal: "dinner" },
+                    state: { day: "Friday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displayFridayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -261,21 +404,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="saturday"
+              targetid="saturday"
             >
-              <img src={pinkdot} alt="large pink dot"  />
+              <img src={pinkdot} alt="large pink dot" />
               &nbsp; &nbsp; Saturday
             </Accordion.Header>
-            <Accordion.Body accordionId="saturday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="saturday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "saturday", meal: "breakfast" },
+                    state: { day: "Saturday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast : {displaySaturdayBreakfast}
                 </Link>
                 <br />
 
@@ -283,20 +426,20 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "saturday", meal: "lunch" },
+                    state: { day: "Saturday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displaySaturdayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "saturday", meal: "dinner" },
+                    state: { day: "Saturday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displaySaturdayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
@@ -306,21 +449,21 @@ export default function WeeklyPlanner() {
           <Accordion.Item>
             <Accordion.Header
               style={{ backgroundColor: "#343a41" }}
-              targetId="sunday"
+              targetid="sunday"
             >
               <img src={reddot} alt="large red dot" />
               &nbsp; &nbsp; Sunday
             </Accordion.Header>
-            <Accordion.Body accordionId="sunday">
-              <ul className='weeklyplanner-accordion-links'>
+            <Accordion.Body accordionid="sunday">
+              <ul className="weeklyplanner-accordion-links">
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "sunday", meal: "breakfast" },
+                    state: { day: "Sunday", meal: "Breakfast" },
                   }}
                 >
-                  Breakfast
+                  Breakfast : {displaySundayBreakfast}
                 </Link>
                 <br />
 
@@ -328,38 +471,31 @@ export default function WeeklyPlanner() {
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "sunday", meal: "lunch" },
+                    state: { day: "Sunday", meal: "Lunch" },
                   }}
                 >
-                  Lunch
+                  Lunch : {displaySundayLunch}
                 </Link>
                 <br />
                 <Link
                   style={{ textDecoration: "none" }}
                   to={{
                     pathname: "/day",
-                    state: { day: "sunday", meal: "dinner" },
+                    state: { day: "Sunday", meal: "Dinner" },
                   }}
                 >
-                  Dinner
+                  Dinner : {displaySundayDinner}
                 </Link>
               </ul>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       </div>
-      {/* <div className="calender">
-        <h1 className="header">Meal Plan Calendar</h1>
-        <div className="calendar-container">
-          <Calendar
-            onChange={setDate}
-            value={date}
-            defaultValue={date}
-            minDate={new Date()}
-          />
-        </div>
-        <div className="text-center">Selected date: {date.toDateString()}</div>
-      </div> */}
+      <Table>
+
+      </Table>
+      <Button onClick={() => props.postNewMealSelection(props.mealselection, props.token.token)} id="planner-submit">Submit Meal Plan</Button>{ "  " }
+      <Button onClick={() => props.clearMealPlan(props.token.token)} id="planner-delete">Clear Meal Plan</Button>        
     </div>
   );
 }

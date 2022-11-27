@@ -1,7 +1,14 @@
+
 #navigation_container {
   /* background-color:#1F2746; */
   color: #e5e8f2;
   text-decoration: none;
+  background-image: url(../../images/blueberry.JPG);
+  background-repeat: no-repeat;
+  background-size:cover;
+  border-radius: 15px;
+  height: 150px;
+  
 }
 button#nav_home.btn.btn-secondary > a,
 button#nav_planner.btn.btn-secondary > a,
@@ -24,10 +31,10 @@ button#nav_createrecipe.btn.btn-secondary {
   height: 38px;
   color: #171c32;
   margin-right: 10px;
-  box-shadow: 1px 6px 40px -3px rgba(0, 0, 0, 0.59) inset;
+  /* box-shadow: 1px 6px 40px -3px rgba(0, 0, 0, 0.59) inset;
   -webkit-box-shadow: 1px 6px 40px -3px rgba(0, 0, 0, 0.59) inset;
-  -moz-box-shadow: 1px 6px 40px -3px rgba(0, 0, 0, 0.59) inset;
-  border-radius: 35px;
+  -moz-box-shadow: 1px 6px 40px -3px rgba(0, 0, 0, 0.59) inset; */
+  border-radius: 15px;
   padding:0px;
 }
 #nav_planner {
@@ -72,10 +79,10 @@ button#nav_createrecipe.btn.btn-secondary {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  filter: drop-shadow(0 0 0.75rem #171c32);
-  background-color: #171c32;
   max-width: 100%;
   border-radius: 10px;
+
+ 
 }
 @media screen and (min-width: 900px) {
  

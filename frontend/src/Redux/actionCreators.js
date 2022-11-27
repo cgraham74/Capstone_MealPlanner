@@ -14,53 +14,278 @@ export const addUser = (user) => ({
 export const deleteUser = () => ({
   type: ActionTypes.DELETE_USER,
 });
+
+export const recipesLoading = () => ({
+  type:ActionTypes.RECIPES_LOADING,
+});
+
+export const allRecipesLoading = () => ({
+  type:ActionTypes.ALL_RECIPES_LOADING,
+})
+
+//ADDED HEADERS AND TOKENS TO THE SERVER
+export const fetchRecipes = (token) => async (dispatch) => {
+  dispatch(recipesLoading());
+  await fetch(baseUrl + "/recipe/list", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok){
+        return response.json();
+      } else {
+        let error = new Error(
+          "Error" + response.status + ": " + response.statusText
+        );
+        error.response = response;
+        throw error;
+      } 
+    },
+    (error) =>{
+      let errmess = new Error(error.message);
+      throw errmess;
+    })
+    .then((data) => {
+      return dispatch(addRecipe(data));
+ 
+    });
+};
+
+//List all recipes for ALL users
+export const fetchAllRecipes = (token) => async (dispatch) => {
+  dispatch(allRecipesLoading());
+  await fetch(baseUrl + "/recipe/listall", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((response) => {
+    if (response.ok){
+      return response.json();
+    } else {
+      let error = new Error(
+        "Error" + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    } 
+  },
+  (error) =>{
+    let errmess = new Error(error.message);
+    throw errmess;
+  })
+    .then((data) => {
+      return dispatch(addAllRecipe(data));
+    
+    });
+    
+};
+
 export const addRecipe = (recipes) => ({
   type: ActionTypes.ADD_RECIPE,
   payload: recipes,
 });
+//for all recipes for all users
+export const addAllRecipe = (allrecipes) => ({
+  type: ActionTypes.ADD_ALL_RECIPES,
+  payload: allrecipes,
+});
+export const updateRecipe = (recipe) => ({
+  type: ActionTypes.UPDATE_RECIPE,
+  payload: recipe,
+});
 
-export const fetchRecipes = () => (dispatch) => {
-  fetch(baseUrl + "/Test/RecipeListTest")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      return dispatch(addRecipe(data));
-    });
+export const createRecipe = (recipe) => ({
+  type: ActionTypes.CREATE_RECIPE,
+  payload: recipe,
+});
+
+export const clearMealPlan = (token) => (dispatch) => {
+  return fetch(baseUrl + "/recipe/mealplan/delete", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(
+    (response) => {
+    if (response.ok) {
+      alert("Cleared Meal Plan");
+      dispatch(fetchMealPlan(token));
+      dispatch(fetchShoppingList(token));
+      return response;
+    } else {
+     let error = new Error(
+      "Error " + response.status + ": " + response.statusText
+     );
+     error.response = response;
+     throw error;
+    }
+  },
+  (error) => {
+    let errmess = new Error(error.message);
+    throw errmess;
+  }
+  )
+  .catch((err) => {
+    console.error(err);
+    alert("Could not clear meal plan!");
+
+  })
 };
-// fetch(baseUrl, {
-//   method: "POST",
-//   cache: "no-cache",
-//   headers: {
-//     "Content-Type": "application/json",
-//      "Authorization": `Bearer ${props.token}`
-//   },
-//   body: JSON.stringify(recipe),
+
+export const saveRecipe =
+  (
+    user_id,
+    title,
+    imageUrl,
+    ingredientList,
+    instructions,
+    servingSize,
+    category, 
+    token, 
+    
+  ) =>
+  async (dispatch) => {
+    const newRecipe = {
+      user_id: user_id,
+      title: title,
+      imageUrl: imageUrl,
+      ingredientList: ingredientList,
+      instructions: instructions,
+      servingSize: servingSize,
+      category: category,
+
+    };
+    return await fetch(baseUrl + "/recipe/save", {
+      method: "POST",
+      body: JSON.stringify(newRecipe),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(
+      (response) => {
+      if (response.ok) {
+        alert("Recipe Created!");
+        dispatch(fetchAllRecipes(token))
+        dispatch(fetchRecipes(token));
+        return response;
+      } else {
+       let error = new Error(
+        "Error " + response.status + ": " + response.statusText
+       );
+       error.response = response;
+       throw error;
+      }
+    },
+    (error) => {
+      let errmess = new Error(error.message);
+      throw errmess;
+    }
+    )
+    .catch((err) => {
+      console.error(err);
+      alert("Could not create recipe!");
+
+    })
+  };
+
+export const updatedRecipe =
+  (
+    recipeid,
+    user_id,
+    title,
+    imageUrl,
+    ingredientList,
+    instructions,
+    servingSize,
+    category,
+    token
+  ) =>
+  async (dispatch) => {
+    const updateRecipe = {
+      recipeid: recipeid,
+      user_id: user_id,
+      title: title,
+      imageUrl: imageUrl,
+      ingredientList: ingredientList,
+      instructions: instructions,
+      servingSize: servingSize,
+      category: category,  
+    };
+    return await fetch(baseUrl + `/recipe/update/${recipeid}`, {
+      method: "PUT",
+      cache: "no-cache",
+      body: JSON.stringify(updateRecipe),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Recipe updated!");
+          dispatch(fetchRecipes(token))
+          return response;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Could not update the recipe!");
+      });
+  };
+
+export const deleteRecipe = (id) => (dispatch) => {
+  fetch(baseUrl + "/recipe/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) {
+      alert("Recipe Deleted");
+      return dispatch(deleteRecipe());
+    }
+  });
+};
+// export const deleteRecipe = (id) => ({
+//   type: ActionTypes.DELETE_RECIPE,
+//   payload: id
 // })
-//   .then((response) => {
-//     if (response.ok) {
-//       alert("Saved!");
-//       resetForm(e);
-//     }
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     alert("Could not save card!");
-//   });
+// .fetch(baseUrl + "/recipe/delete/" + id, {
+//   method: "DELETE",
+//   headers: {
+//     "Content-Type": "application/json"
+//   },
+// })
+// .then((response)=>{
+//   if (response.ok){
+//     alert("Recipe Deleted");
+//   }
+// });
 
-//Calls the fetch to add the ingredients at launch - will need to implmenent
-//The updated and delete as well - use this as a template
-export const fetchPantryItems = () => (dispatch) => {
-  fetch(baseUrl + "/Test/PantryTest")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log("This data is from pantry" + data);
-      return dispatch(addIngredient(data));
-    });
-};
+// //Calls the fetch to add the ingredients at launch
+// export const fetchPantryItems = (token) => async (dispatch) => {
+//   await fetch(baseUrl + "/recipe/pantry", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   })
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .then((data) => {
+//       return dispatch(addIngredient(data));
+//     });
+// };
 
 //Actioncreators for ingredients
 export const addIngredient = (ingredient) => ({
@@ -76,15 +301,19 @@ export const updateIngredient = (ingredient) => ({
   payload: ingredient,
 });
 
-//Action creators for Shopping List - change endpoint when shoppinglist endpoint
-//is available - using pantry endpoint for now
-export const fetchShoppingList = () => (dispatch) => {
-  fetch(baseUrl + "/Test/PantryTest")
+//Action creators for Shopping List
+export const fetchShoppingList = (token) => async (dispatch) => {
+  await fetch(baseUrl + "/recipe/shoppinglist", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      console.log("This data is from fetchShoppingList: " + data);
       return dispatch(addShoppingList(data));
     });
 };
@@ -103,14 +332,19 @@ export const updateShoppingList = (shoppingList) => ({
 });
 
 //Action creators for Mealplan
-export const fetchMealPlan = () => (dispatch) => {
-  fetch(baseUrl + "/Test/TestBreakfast")
+export const fetchMealPlan = (token) => (dispatch) => {
+  fetch(baseUrl + "/recipe/mealplan", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      console.log("This data is from fetchMeals" + data);
-      return dispatch(addMealPlan(data));
+      return dispatch(addMealSelections(data));
     });
 };
 
@@ -125,4 +359,78 @@ export const deleteMealplan = (mealplan) => ({
 export const updateMealPlan = (mealplan) => ({
   type: ActionTypes.UPDATE_MEALPLAN,
   payload: mealplan,
+});
+
+//can change this to fetch
+export const newMealSelection =
+  (user, mealtime, day, recipename) => (dispatch) => {
+    const newMealplan = {
+      user_id: user,
+      category: mealtime,
+      dayofweek: day,
+      recipename: recipename
+    };
+    dispatch(addMealSelection(newMealplan));
+  };
+
+export const changeMealSelection =
+  (mealplanid, user, mealtime, day, recipename) => (dispatch) => {
+    const newMealplan = {
+      mealplanid: mealplanid,
+      user_id: user,
+      category: mealtime,
+      dayofweek: day,
+      recipename: recipename
+    };
+    dispatch(updateMealSelection(newMealplan));
+  };
+//-----------------------------------------
+export const postNewMealSelection =
+  (mealselection, token) => (dispatch) => {
+    // Post a meal plan
+    fetch(baseUrl + "/recipe/mealplan/save", {
+      method: "POST",
+      cache: "no-cache",
+      body: JSON.stringify(mealselection),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Saved meal plan!");
+          dispatch(fetchMealPlan(token));
+          dispatch(fetchShoppingList(token));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Could not save plan!");
+      });
+  };
+
+//----------------------------
+export const addMealSelections = (newMeal) => ({
+  type: ActionTypes.ADD_MEALSELECTIONS,
+  payload: newMeal,
+});
+
+export const addMealSelection = (newMeal) => ({
+  type: ActionTypes.ADD_MEALSELECTION,
+  payload: newMeal,
+});
+export const updateMealSelection = (newMeal) => ({
+  type: ActionTypes.UPDATE_MEALSELECTION,
+  payload: newMeal,
+});
+
+export const addPurchasedItem = (newitem) => ({
+  type: ActionTypes.ADD_PURCHASED_ITEMS,
+  payload: newitem,
+});
+
+export const deletePurchasedItem = (newitem) => ({
+  type: ActionTypes.DELETE_PURCHASED_ITEMS,
+  payload: newitem,
 });

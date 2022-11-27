@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Navigator from "../navigation/Navigator";
+import { FaRegTrashAlt } from "react-icons/fa";
+
 import {
   Form,
   Button,
@@ -13,6 +15,7 @@ import {
   Col,
   Row,
 } from "reactstrap";
+import { useLocation } from "react-router-dom";
 
 export default function CreateRecipe(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -21,56 +24,81 @@ export default function CreateRecipe(props) {
   const [ingredientName, setIngredientName] = useState("");
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [ingredientUnit, setIngredientUnit] = useState("");
-  const [recipeName, setRecipeName] = useState("");
-  const [servingSize, setServingSize] = useState("");
-  const [instructions, setInstruction] = useState("");
   const [category, setCategory] = useState("Category");
-  const [recipe, setRecipe] = useState({});
   const [image, setImage] = useState(null);
+  const location = useLocation();
 
-  // const required = (val) => val && val.length;
-  // const maxLength = (len) => (val) => !val || val.length <= len;
-  // const minLength = (len) => (val) => val && val.length >= len;
-  // const isNumber = (val) => !isNaN(Number(val));
+  let saveRecipe = {
+    user_id: "",
+    title: "",
+    imageUrl: "",
+    ingredientList: { name: " ", quantity: "", measurementunit: "" },
+    instructions: "",
+    servingSize: "",
+    category: "",
+  };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    alert(
-      recipeName +
-        " " +
-        servingSize +
-        " " +
-        image +
-        " " +
-        instructions +
-        " " +
-        category +
-        " " +
-        JSON.stringify(ingredients) +
-        " ID " +
-        JSON.stringify(props)
+  if (location.state === undefined) {
+    saveRecipe.title = "Recipe name...";
+    saveRecipe.servingSize = "Serving size...";
+    saveRecipe.ingredientList = {
+      name: "Ingredient name...",
+      quantity: "Amount needed...",
+      measurementunit: "Large, Tsp, Cup etc",
+    };
+    saveRecipe.instructions = "Cooking instructions..";
+  } else {
+    saveRecipe.title = location.state.saveRecipe.saveRecipe.title;
+    saveRecipe.servingSize = location.state.saveRecipe.saveRecipe.servingSize;
+    saveRecipe.ingredientList =
+      location.state.saveRecipe.saveRecipe.ingredientList;
+    saveRecipe.instructions = location.state.saveRecipe.saveRecipe.instructions;
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter"){
+      addIngredients(e)
+    }
+  }
+
+  //corrected the input to saveRecipes so object can be created
+  function handleSubmit(values) {
+    values.preventDefault();
+    props.saveRecipe(
+      props.user.id,
+      values.target.title.value,
+      values.target.image.files[0].name,
+      ingredients,
+      values.target.instructions.value,
+      values.target.servingsize.value,
+      category,
+      props.token.token
     );
-    setRecipe({
-      user_id: props.user.id,
-      title: recipeName,
-      imageUrl: image,
-      ingredientList: ingredients,
-      instructions: instructions,
-      servingSize: servingSize,
-      category: category,
-    });
   }
 
-  function resetForm(e) {
-    setRecipe({});
-    setIngredients([]);
-    setCategory("Category");
-    e.target.reset();
-  }
+  const imgFileHandler = (e) => {
+    e.preventDefault();
+    let selected = e.target.files[0];
+    if (selected) {
+      setImage(selected);
+      // console.log("Logging Image"+ image.name + " Where from? " + image.URL);
+      // File.Copy(image, `../../images/${image.name}`)
+      const fileReader = new FileReader();
+      fileReader.onChange = (e) => {
+        const { result } = selected;
+        console.log(result);
+      };
+      // fileReader.readAsDataURL(image);
+    }
+  };
+
   const changeCategory = (e) => {
     setCategory(e.target.value);
   };
 
+  const handleDelete = (id, e) => {
+    setIngredients(ingredients.filter((v, i) => i !== id));
+  };
   const ingredientsList = ingredients.map((item, id) => {
     return (
       <>
@@ -79,20 +107,22 @@ export default function CreateRecipe(props) {
           <td>{item.name}</td>
           <td>{item.quantity}</td>
           <td>{item.measurementunit}</td>
+          <td>
+            <FaRegTrashAlt id="trash" onClick={(e) => handleDelete(id, e)} />
+          </td>
         </tr>
       </>
     );
   });
 
   function addIngredients(event) {
-    //If Ingredients fields are empty -
     if (
       ingredientName !== "" &&
       ingredientAmount !== "" &&
       ingredientUnit !== ""
     ) {
       event.preventDefault();
-      setIngredients((prevIngred) => [
+      setIngredients(() => [
         ...ingredients,
         {
           name: ingredientName,
@@ -113,18 +143,23 @@ export default function CreateRecipe(props) {
         <h3>Create Recipe</h3>
       </div>
       <div className="col-12 col-md-9" id="create-recipe-form">
-        <Form onSubmit={(e) => handleSubmit(e)} id="createrecipe">
+        <Form
+          model="recipeform"
+          onSubmit={(values) => handleSubmit(values)}
+          id="createrecipe"
+        >
           <Row className="form-group">
-            <Label htmlFor="recipename" md={2}>
+            <Label htmlFor="title" md={2}>
               Recipe name:
             </Label>
             <Col md={10}>
               <Input
-                id="recipename"
-                name="recipename"
-                placeholder="Recipe name..."
+                id="title"
+                name="title"
+                placeholder={saveRecipe.title}
                 type="text"
-                onChange={(e) => setRecipeName(e.target.value)}
+                pattern="[a-zA-Z ',]*"
+                required={true}
               ></Input>
             </Col>
           </Row>
@@ -136,25 +171,43 @@ export default function CreateRecipe(props) {
               <Input
                 id="servingsize"
                 name="servingsize"
-                placeholder="Serving size..."
+                placeholder={saveRecipe.servingSize}
                 pattern="[0-9]*"
                 type="text"
-                value={servingSize}
-                onChange={(e) =>
-                  setServingSize((v) =>
-                    e.target.validity.valid ? e.target.value : v
-                  )
-                }
+                required={true}
               ></Input>
             </Col>
           </Row>
           <Row className="form-group">
-            <Col md={4}>
+            <Col md={10}>
+              <Input
+                className="image"
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={
+                  imgFileHandler
+
+                  // localStorage.setItem(image, reader.result);
+                  // "src/images",
+                }
+                required={true}
+              />
+              {image && (
+                <img
+                  alt="not found"
+                  width={"25px"}
+                  src={URL.createObjectURL(image)}
+                />
+              )}
+            </Col>
+            <Col md={2}>
               <Dropdown
                 isOpen={dropdownOpen}
                 toggle={toggle}
                 direction="down"
                 id="category-dropdown"
+                required={true}
               >
                 <DropdownToggle caret>{category}</DropdownToggle>
                 <DropdownMenu>
@@ -167,45 +220,20 @@ export default function CreateRecipe(props) {
                   <DropdownItem value="Dinner" onClick={changeCategory}>
                     Dinner
                   </DropdownItem>
-                  <DropdownItem value="Dessert" onClick={changeCategory}>
-                    Dessert
-                  </DropdownItem>
-                  <DropdownItem value="Snack" onClick={changeCategory}>
-                    Snacks
-                  </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </Col>
-            <Col md={8}>
-              <Input
-                id="create-recipe-image"
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  console.log(e.target.files[0]);
-                  setImage(e.target.files[0]);
-                }}
-              />
-              {image && (
-                <img
-                  alt="not found"
-                  width={"25px"}
-                  src={URL.createObjectURL(image)}
-                />
-              )}
-            </Col>
           </Row>
-          {/* TODO: 
-          ADD: Delete function to be able to remove individual ingredient from list incase of ooopsies */}
           <Row className="form-group" id="ingredient-add-text-btn">
             <Col md={4}>
               <Label htmlFor="ingredients">Ingredient</Label>
-
               <Input
                 id="ingredients"
                 name="ingredients"
                 type="text"
-                placeholder="Ingredient name..."
+                pattern="[a-zA-Z]*"
+               
+                placeholder={saveRecipe.ingredientList.name}
                 onChange={(e) => setIngredientName(e.target.value)}
                 value={ingredientName}
               />
@@ -217,8 +245,9 @@ export default function CreateRecipe(props) {
                 id="quantity"
                 name="quantity"
                 type="text"
-                pattern="[0-9]*"
+                pattern="[0-9/.]*"
                 placeholder="Amount needed..."
+             
                 value={ingredientAmount}
                 onChange={(e) =>
                   setIngredientAmount((v) =>
@@ -229,7 +258,6 @@ export default function CreateRecipe(props) {
             </Col>
             <Col md={4}>
               <Label for="measurement">Measurement</Label>
-
               <Input
                 id="measurement"
                 name="measurement"
@@ -237,9 +265,11 @@ export default function CreateRecipe(props) {
                 placeholder="Large, Tsp, Cup etc..."
                 value={ingredientUnit}
                 onChange={(e) => setIngredientUnit(e.target.value)}
+                pattern="[a-zA-Z.]*"
+                onKeyDown={(e) => handleKeyDown(e)}
               ></Input>
             </Col>
-            <Col md={1}>
+            <Col md={1} id="col-add-btn">
               <Button
                 type="button"
                 onClick={(event) => addIngredients(event)}
@@ -266,15 +296,17 @@ export default function CreateRecipe(props) {
               id="instructions"
               name="instructions"
               type="textarea"
-              placeholder="Cooking instructions..."
+              placeholder={saveRecipe.instructions}
               rows="8"
-              onChange={(e) => setInstruction(e.target.value)}
             />
           </Row>
-          <Button type="submit" id="submit-recipe">
-            Submit
-          </Button>
+          <div id="submit-button-container">
+            <Button type="submit" id="submit-recipe">
+              Submit
+            </Button>
+          </div>
         </Form>
+
       </div>
     </div>
   );

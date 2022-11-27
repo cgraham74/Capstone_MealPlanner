@@ -12,7 +12,7 @@ export const ShoppingList = (
     case actionTypes.UPDATE_SHOPPINGLIST:
       return { ...state, shoppinglist: action.payload };
     case actionTypes.DELETE_SHOPPINGLIST:
-      return { ...state, shoppinglist: action.payload };
+      return { ...state, shoppinglist: state.shoppinglist.filter(item => item.ingredientName !== action.payload) };
     default:
       return state;
   }

@@ -1,11 +1,11 @@
 .card {
-  color: black;
+  color: #171c32;
 }
 #ingredient {
   font-size: small;
 }
 li#ingredient {
-  list-style: circle;
+  list-style:circle;
   margin-left: 20px;
 }
 .table > :not(caption) > * > * {
@@ -34,6 +34,7 @@ Form {
 #add-ingredient,
 #submit-recipe,
 button.dropdown-toggle.btn.btn-secondary {
+  
   background-color: #171c32;
   border-color: #171c32;
   border-radius: 15px;
@@ -49,6 +50,8 @@ div#recipe-update-delete {
 #ingredient-add-text-btn {
   display: flex;
   align-items: flex-end;
+  justify-self: flex-end;
+  padding-right: 0px;
 }
 
 .form-group {
@@ -60,4 +63,62 @@ form#createrecipe {
 #instructions {
   margin-left: 12px;
   flex-shrink: inherit;
+}
+#submit-button-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+button.dropdown-toggle.btn.btn-secondary{
+  display: flex;
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+#update {
+  background-color: #1f2746;
+}
+#modal-header, #modal-body{
+  color:#e5e8f2;
+background-color: #1f2746;
+}
+
+#modal-ingredient{
+  background-color: #1f2746;
+  display: inline;
+  width: 100px;
+}
+
+#render-saved-recipes{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap:1px;
+  overflow:hidden;
+  margin: 1px;
+
+}
+
+#recipecard {
+  height: 700px;
+
+  overflow: scroll;
+}
+
+#modal-add, #modal-update-button, #modal-cancel-button{
+  background-color: #1f2746;
+  color:#e5e8f2;
+}
+#modal-add:hover, #modal-update-button:hover, #modal-cancel-button:hover{
+color:#80F57E;
+}
+
+
+.modal-content{
+  background-color: #1f2746;
+}
+.dropdown, .dropend, .dropstart, .dropup {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
 }

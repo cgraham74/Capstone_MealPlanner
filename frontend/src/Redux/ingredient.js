@@ -10,7 +10,7 @@ export const Ingredient = (
     case actionTypes.ADD_INGREDIENT:
       return { ...state, ingredient: action.payload };
     case actionTypes.UPDATE_INGREDIENT:
-      return { ...state, ingredient: action.payload };
+      return { ...state, ingredient: [...state.ingredient, action.payload]};
     case actionTypes.DELETE_INGREDIENT:
       return { ...state, ingredient: action.payload };
     default:

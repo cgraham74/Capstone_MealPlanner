@@ -58,3 +58,10 @@ Link{
   .weeklyplanner-accordion-links > a:hover {
     color:#80F57E;
   }
+  #planner-submit, #planner-delete{
+    background: rgb(23, 28, 50);
+border-color: rgb(23, 28, 50);
+  }
+  #planner-submit:hover, #planner-delete:hover{
+  color:#80F57E;
+  }
