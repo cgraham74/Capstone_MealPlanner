@@ -28,7 +28,7 @@ import Recipes from "../Recipe/Recipes";
 import ShoppingList from "../ShoppingList/ShoppingList";
 import CreateRecipe from "../Recipe/CreateRecipe";
 import Day from "../Day/Day";
-//import AllRecipes from "../Pantry/AllRecipes";
+import AllRecipes from "../Pantry/AllRecipes";
 import { Button } from "reactstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import "./main.css";
