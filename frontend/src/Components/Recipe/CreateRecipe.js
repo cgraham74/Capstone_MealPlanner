@@ -76,22 +76,26 @@ export default function CreateRecipe(props) {
     );
   }
 
+
   const imgFileHandler = (e) => {
     e.preventDefault();
     let selected = e.target.files[0];
     if (selected) {
       setImage(selected);
-      // console.log("Logging Image"+ image.name + " Where from? " + image.URL);
-      // File.Copy(image, `../../images/${image.name}`)
+        console.log("Selected: " + selected);
+        console.log("Logging Image "+ image.name + " Where from? " + image.URL);
+       File.Copy(image, `../../images/${image.name}`)
       const fileReader = new FileReader();
       fileReader.onChange = (e) => {
         const { result } = selected;
+        console.log("THis print?")
         console.log(result);
       };
-      // fileReader.readAsDataURL(image);
+       fileReader.readAsDataURL(image);
     }
   };
 
+  
   const changeCategory = (e) => {
     setCategory(e.target.value);
   };

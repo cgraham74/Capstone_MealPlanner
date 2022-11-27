@@ -17,7 +17,7 @@ import {
   Table,
 } from "reactstrap";
 import "./recipe.css";
-import { Fade } from "react-animation-components";
+
 import defaultImg from "../../images/default.png";
 import { Loading } from "../LoadingComponent";
 // import {
@@ -128,7 +128,7 @@ function RenderSavedRecipes({ recipeCard, updatedRecipe, token, imgUrls }) {
 
   return (
     <>
-    <Fade in>
+   
       <Card style={{ width: "30rem" }} id="recipecard">
         <CardBody>
           <CardTitle>
@@ -231,7 +231,7 @@ function RenderSavedRecipes({ recipeCard, updatedRecipe, token, imgUrls }) {
           </div>
         </CardBody>
       </Card>
-    </Fade>
+    
     </>
   );
 }

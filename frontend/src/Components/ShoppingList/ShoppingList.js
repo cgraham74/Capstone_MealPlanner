@@ -49,6 +49,8 @@ export default function ShoppingList(props) {
   });
   //display pantry items
   return (
+
+    
     <>
       <Navigator />
       <h3>ShoppingList</h3>

@@ -252,8 +252,6 @@ class Main extends Component {
               />
             )}
           />
-          <Route path="/day" component={() => <Day />} />
-          <Route path="/home" component={() => <Home />} />
           <Redirect to="/login" />
         </Switch>
       </div>
