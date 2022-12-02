@@ -172,22 +172,22 @@ function RenderSavedRecipes({ recipeCard, updatedRecipe, token, imgUrls }) {
                   onChange={(e) => setServingSize(e.target.value)}
                 ></Input>
 
-                <Label for="ingredients">Add Ingredient</Label>
+                <Label for="ingredient">Add Ingredient</Label>
                 <Input
                   type="text"
-                  name="ingredient"
+                  name="ingredientname"
                   placeholder="Ingredient Name"
                   onChange={(e) => setIngredientName(e.target.value)}
                 ></Input>
                 <Input
                   type="text"
-                  name="ingredient"
+                  name="ingredientquantity"
                   placeholder="Quantity"
                   onChange={(e) => setIngredientQuantity(e.target.value)}
                 ></Input>
                 <Input
                   type="text"
-                  name="ingredient"
+                  name="ingredientmeasurement"
                   placeholder="Measurement Unit"
                   onChange={(e) => setIngredientMeasurementUnit(e.target.value)}
                 ></Input>
