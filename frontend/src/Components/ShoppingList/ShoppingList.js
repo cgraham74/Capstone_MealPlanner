@@ -16,9 +16,9 @@ export default function ShoppingList(props) {
   const shoppingItem = props.shoppingList.map((item, index) => {
 
     return (
-      <>
+      <div key={index}>
       
-        <li key={index} id="shopping-list">
+        <li id="shopping-list">
           <div
             onClick={() => {
               purchasedIngredient(item.ingredientname);
@@ -47,7 +47,7 @@ export default function ShoppingList(props) {
             onClick={() => deleteShoppingList(item.ingredientname)}
           />
         </li>
-      </>
+      </div>
     );
   });
   //display pantry items

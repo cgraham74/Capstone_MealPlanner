@@ -73,7 +73,7 @@ export default function RecipeCard(props) {
   );
   const recipeAllCollections = filterCollection.map((item, id) => {
     return (
-      <>
+      
         <RenderAllRecipes
           key={id}
           user={props.user}
@@ -81,7 +81,7 @@ export default function RecipeCard(props) {
           recipeCard={item}
           token={props.token}
         />
-      </>
+    
     );
   });
   if (props.allRecipesLoading) {
