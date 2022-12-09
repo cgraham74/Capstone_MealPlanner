@@ -106,7 +106,7 @@ export const createRecipe = (recipe) => ({
 });
 
 export const clearMealPlan = (token) => (dispatch) => {
-  return fetch(baseUrl + "/recipe/mealplan/delete", {
+  return fetch(baseUrl + "/mealplan/delete", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const clearMealPlan = (token) => (dispatch) => {
     if (response.ok) {
       alert("Cleared Meal Plan");
       dispatch(fetchMealPlan(token));
-      dispatch(fetchShoppingList(token));
+      // dispatch(fetchShoppingList(token));
       return response;
     } else {
      let error = new Error(
@@ -303,7 +303,7 @@ export const updateIngredient = (ingredient) => ({
 
 //Action creators for Shopping List
 export const fetchShoppingList = (token) => async (dispatch) => {
-  await fetch(baseUrl + "/recipe/shoppinglist", {
+  await fetch(baseUrl + "/shopping", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -311,9 +311,13 @@ export const fetchShoppingList = (token) => async (dispatch) => {
     },
   })
     .then((response) => {
-      return response.json();
+        if(response.ok){
+          return response.json();   
+        }
+        
     })
     .then((data) => {
+  
       return dispatch(addShoppingList(data));
     });
 };
@@ -333,7 +337,7 @@ export const updateShoppingList = (shoppingList) => ({
 
 //Action creators for Mealplan
 export const fetchMealPlan = (token) => (dispatch) => {
-  fetch(baseUrl + "/recipe/mealplan", {
+  fetch(baseUrl + "/mealplan", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -344,7 +348,9 @@ export const fetchMealPlan = (token) => (dispatch) => {
       return response.json();
     })
     .then((data) => {
+      dispatch(fetchShoppingList(token));
       return dispatch(addMealSelections(data));
+      
     });
 };
 
@@ -388,7 +394,7 @@ export const changeMealSelection =
 export const postNewMealSelection =
   (mealselection, token) => (dispatch) => {
     // Post a meal plan
-    fetch(baseUrl + "/recipe/mealplan/save", {
+    fetch(baseUrl + "/mealplan/save", {
       method: "POST",
       cache: "no-cache",
       body: JSON.stringify(mealselection),
@@ -433,4 +439,5 @@ export const addPurchasedItem = (newitem) => ({
 export const deletePurchasedItem = (newitem) => ({
   type: ActionTypes.DELETE_PURCHASED_ITEMS,
   payload: newitem,
+  
 });

@@ -228,9 +228,11 @@ class Main extends Component {
                 addPurchasedItem={this.props.addPurchasedItem}
                 deletePurchasedItem={this.props.deletePurchasedItem}
                 purchaseditems={this.props.purchaseditems.purchaseditems}
+                
               />
             )}
           />
+       
           <Route
             path="/createrecipe"
             component={() => (

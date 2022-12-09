@@ -17,7 +17,7 @@ public class ShoppingService {
     @Autowired
     RecipeIngredientRepository recipeIngredientRepository;
 
-    @PostAuthorize("#username == authentication.principal.username")
+
     public Long getUserId(String username) {
         return userRepository.getUserIdFromUsername(username);
     }
