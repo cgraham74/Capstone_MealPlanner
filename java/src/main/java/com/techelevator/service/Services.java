@@ -1,9 +1,7 @@
 package com.techelevator.service;
 
-import com.techelevator.dto.MealPlannerDTO;
 import com.techelevator.dto.RecipeDTO;
 import com.techelevator.dto.RecipeIngredientDTO;
-import com.techelevator.dto.ShoppingListDTO;
 import com.techelevator.model.*;
 import com.techelevator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +25,6 @@ public class Services {
 
     //-------------------QUERIES-------------------
 
-    public List<MealPlan> mealPlanListForUser(String name) {
-
-        return mealPlanRepository.getMealPlanListFromUserId(getUserId(name));
-    }
 
     //For when we start searching by breakfast/lunch/dinner.
     public List<Recipe> getRecipeTitleByCategory(String category) {
@@ -40,35 +34,6 @@ public class Services {
     public RecipeDTO getRecipeById(Integer recipeId) {
         return getRecipeDTO(recipeId);
     }
-
-
-    public List<ShoppingListDTO> getMealPlanShoppingListFromUser(String username) {
-
-        List<ShoppingListDTO> shoppingList = new ArrayList<>();
-        List<String> ingredientNames = new ArrayList<>(recipeIngredientRepository.
-                getListOfIngredientNames(getUserId(username)));
-
-        for (String ingredientName : ingredientNames) {
-            shoppingList.add(new ShoppingListDTO(ingredientName));
-        }
-        return shoppingList;
-    }
-
-    //-------------------Meal Plan-------------------
-
-    public void saveMealPlan(List<MealPlannerDTO> mealPlanList, String name) {
-
-        for (MealPlannerDTO mealPlan : mealPlanList) {
-            MealPlan incomingMealPlan = new MealPlan();
-            incomingMealPlan.setMealplanid(mealPlan.getMealplanid());
-            incomingMealPlan.setUser_id(getUserId(name));
-            incomingMealPlan.setCategory(mealPlan.getCategory());
-            incomingMealPlan.setDayofweek(mealPlan.getDayofweek());
-            incomingMealPlan.setRecipename(mealPlan.getRecipename());
-            mealPlanRepository.save(incomingMealPlan);
-        }
-    }
-
 
     //Get the recipe's ingredients for the DTO
     //-------------------RECIPES-------------------
@@ -149,12 +114,6 @@ public class Services {
     }
 
     //-------------------DELETE-------------------
-
-    @Transactional
-    public void deleteMealPlanForUser(String username) {
-        mealPlanRepository.deleteMealPlanFromUser(getUserId(username));
-    }
-
 
     //THIS IS WAY TOO SCARY, DON'T USE DELETE RECIPE
 //    public void deleteRecipe(Integer recipeId) {

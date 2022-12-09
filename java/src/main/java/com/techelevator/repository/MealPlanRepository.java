@@ -25,7 +25,8 @@ public interface MealPlanRepository extends JpaRepository<MealPlan, Integer> {
     MealPlan getMealPlanFromUserId(@Param("user_id") Long user_id);
 
     @Modifying
-    @Query("DELETE FROM MealPlan m WHERE m.user_id = :user_id")
-    void deleteMealPlanFromUser(@Param("user_id") Long user_id);
+    @Query("DELETE FROM MealPlan WHERE user_id = :user_id")
+    void deleteMealPlanFromUser(Long user_id);
+
 
 }
