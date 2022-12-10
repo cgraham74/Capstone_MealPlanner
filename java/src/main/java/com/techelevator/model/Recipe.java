@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 public class Recipe {
 
     //Generated and Not Null data tables.
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipeid")
@@ -44,9 +43,6 @@ public class Recipe {
 
     @Column(name = "imagename")
     private String imagename;
-
-//    @Column(name = "visibility")
-//    private boolean visibility;
 
 }
 
