@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, Integer> {
 
-    @Query("SELECT r FROM RecipeIngredient r WHERE r.recipeid = :recipeid")
-    List<RecipeIngredient> getRecipeIngredients(@Param("recipeid") Integer recipeid);
+//    @Query("SELECT r FROM RecipeIngredient r WHERE r.recipeid = :recipeid")
+//    List<RecipeIngredient> getRecipeIngredients(@Param("recipeid") Integer recipeid);
 
     @Modifying
     @Query(value = "INSERT INTO recipeingredient (recipeid, ingredientid, quantity, measurementunit) VALUES( :recipeid, :ingredientid, :quantity, :measurementunit)", nativeQuery = true)
@@ -30,9 +30,9 @@ public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredie
             "WHERE m.user_id = :user_id", nativeQuery = true)
     List<String> getListOfIngredientNames(@Param("user_id") Long user_id);
 
-    @Modifying
-    @Query("DELETE FROM RecipeIngredient r WHERE r.recipeid = :recipeid")
-    void deleteIngredientsFromRecipeID(@Param("recipeid") Integer recipeid);
+//    @Modifying
+//    @Query("DELETE FROM RecipeIngredient r WHERE r.recipeid = :recipeid")
+//    void deleteIngredientsFromRecipeID(@Param("recipeid") Integer recipeid);
 
 
 

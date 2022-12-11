@@ -11,7 +11,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class RecipeIngredient implements Serializable {
 
 
@@ -31,15 +30,6 @@ public class RecipeIngredient implements Serializable {
     @Column(name = "measurementunit")
     @NotNull
     private String measurementunit;
-
-
-//    @ManyToOne
-//    @JoinColumn(name = "recipeid", insertable = false, updatable = false)
-//    private Recipe recipe;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "ingredientid", insertable = false, updatable = false)
-//    private Ingredient ingredient;
 
 }
 

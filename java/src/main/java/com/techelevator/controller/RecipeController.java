@@ -1,6 +1,5 @@
 package com.techelevator.controller;
 
-import com.sun.xml.bind.v2.TODO;
 import com.techelevator.model.Recipe;
 import com.techelevator.service.RecipeService;
 import lombok.AllArgsConstructor;
@@ -34,14 +33,14 @@ public class RecipeController {
         return recipeService.getRecipeById(recipeid);
     }
 //--TODO
-//    //Save the recipe
-//    @PostMapping("/save")
-//    @ResponseBody
-//    public void saveRecipe(@RequestBody Recipe recipe, Principal principal) {
-//        System.out.println("Save Recipe was pinged by: " + principal.getName());
-//        System.out.println("The recipeDTO: " + recipe.getTitle());
-//        recipeService.saveRecipe(recipe);
-//    }
+    //Save the recipe
+    @PostMapping("/save")
+    @ResponseBody
+    public void saveRecipe(@RequestBody Recipe recipe, Principal principal) {
+        System.out.println("Save Recipe was pinged by: " + principal.getName());
+        System.out.println("The recipe: " + recipe.getTitle());
+        recipeService.saveRecipe(recipe);
+    }
 
 
 //--TODO

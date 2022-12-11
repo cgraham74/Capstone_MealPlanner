@@ -4,7 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 @Entity
 @Table(name = "recipe")
@@ -12,7 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Recipe {
 
     //Generated and Not Null data tables.
@@ -47,9 +46,13 @@ public class Recipe {
     @ManyToMany
     @JoinTable(name = "recipeingredient",
             joinColumns = @JoinColumn(name = "recipeid"),
-            inverseJoinColumns = @JoinColumn(name = "ingredientid")
-    )
+            inverseJoinColumns = @JoinColumn(name = "ingredientid"))
+    @MapKeyJoinColumn(name = "quantity", referencedColumnName = "quantity")
+    @MapKeyJoinColumn(name = "measurementunit", referencedColumnName = "measurementunit")
     private List<Ingredient> ingredients;
+
+
+
 }
 
 

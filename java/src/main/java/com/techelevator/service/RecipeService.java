@@ -29,7 +29,9 @@ public class RecipeService {
     }
 
     //Saves a recipe
-
+    public void saveRecipe(Recipe recipe){
+        recipeRepository.save(recipe);
+    }
     //updates a recipe
 
     //deletes a recipe

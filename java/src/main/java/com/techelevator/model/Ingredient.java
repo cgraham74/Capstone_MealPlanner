@@ -1,5 +1,4 @@
 package com.techelevator.model;
-
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+
 public class Ingredient {
 
     //Getting rid of the generation maybe?!
@@ -22,9 +21,5 @@ public class Ingredient {
     @Column(name = "name")
     @NotNull
     private String name;
-
-    public Ingredient(String name) {
-        this.name = name;
-    }
 
 }
