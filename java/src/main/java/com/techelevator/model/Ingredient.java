@@ -23,9 +23,6 @@ public class Ingredient {
     @NotNull
     private String name;
 
-    @Column(name = "category")
-    private String category;
-
     public Ingredient(String name) {
         this.name = name;
     }

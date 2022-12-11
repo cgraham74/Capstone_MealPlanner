@@ -20,8 +20,8 @@ public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredie
     void createNewRecipeIngredient(@Param("recipeid") Integer recipeid, @Param("ingredientid") Integer ingredientid, @Param("quantity") String quantity, @Param("measurementunit") String measurementunit);
 
 
-    @Query("SELECT r.title FROM RecipeIngredient r WHERE r.ingredientid = : ingredientid")
-    String getRecipeTitleFromIngredient(@Param("ingredientid") Integer ingredientid);
+//    @Query("SELECT r.title FROM RecipeIngredient r WHERE r.ingredientid = : ingredientid")
+//    String getRecipeTitleFromIngredient(@Param("ingredientid") Integer ingredientid);
 
     @Query(value = "SELECT DISTINCT i.name FROM ingredient AS i \n" +
             "JOIN recipeingredient AS x ON x.ingredientid = i.ingredientid \n" +

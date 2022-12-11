@@ -3,6 +3,8 @@ package com.techelevator.model;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "recipe")
@@ -19,11 +21,9 @@ public class Recipe {
     @Column(name = "recipeid")
     private Integer recipeid;
 
-    //Make this a join!
     @Column(name = "user_id")
     @NotNull
     private Long user_id;
-    //Make the above a join!
 
     @Column(name = "title")
     @NotNull
@@ -44,6 +44,12 @@ public class Recipe {
     @Column(name = "imagename")
     private String imagename;
 
+    @ManyToMany
+    @JoinTable(name = "recipeingredient",
+            joinColumns = @JoinColumn(name = "recipeid"),
+            inverseJoinColumns = @JoinColumn(name = "ingredientid")
+    )
+    private List<Ingredient> ingredients;
 }
 
 

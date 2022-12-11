@@ -32,8 +32,6 @@ public class RecipeIngredient implements Serializable {
     @NotNull
     private String measurementunit;
 
-    @Column(name = "title")
-    private String title;
 
 //    @ManyToOne
 //    @JoinColumn(name = "recipeid", insertable = false, updatable = false)

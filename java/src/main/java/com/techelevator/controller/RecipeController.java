@@ -1,12 +1,12 @@
 package com.techelevator.controller;
 
+import com.sun.xml.bind.v2.TODO;
 import com.techelevator.model.Recipe;
 import com.techelevator.service.RecipeService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
@@ -24,20 +24,16 @@ public class RecipeController {
     @Autowired
     RecipeService recipeService;
 
-    //Get a list of all the recipes
-//    @GetMapping()
-//    @PreAuthorize("hasRole('ROLE_USER')")
-//    public List<Recipe> getAllRecipes(Principal principal){
-//      System.out.println(principal.getName());
-//        return recipeService.listOfUserRecipes(principal.getName());
-//    }
-////
-
     @GetMapping
-    public List<Recipe> getUserRecipes(){
-        return recipeService.getAllRecipes();
+    public List<Recipe> getUserRecipes(Principal principal){
+        return recipeService.getAllRecipes(principal.getName());
     }
 
+    @GetMapping("{recipeid}")
+    public Recipe getRecipe(@PathVariable("recipeid") Integer recipeid){
+        return recipeService.getRecipeById(recipeid);
+    }
+//--TODO
 //    //Save the recipe
 //    @PostMapping("/save")
 //    @ResponseBody
@@ -47,6 +43,8 @@ public class RecipeController {
 //        recipeService.saveRecipe(recipe);
 //    }
 
+
+//--TODO
 //    @PutMapping("/update/{id}")
 //    public void update(@RequestBody Recipe recipe, @PathVariable int id) {
 //        System.out.println("Update was touched! Current Id: " + id);
@@ -55,14 +53,8 @@ public class RecipeController {
 //        recipeService.updateRecipe(recipe);
 //    }
 
-//    //Get a list of recipes by category
-//    @GetMapping("/category")
-//    public List<Recipe> getCategory(String category){
-//        return recipeService.getCategory(category);
-//    }
 
-   //Browse public recipes - Will need an API call
-
+//--TODO
 //    //Delete a recipe by id
 //    @DeleteMapping("/delete/{id}")
 //    public void delete(@PathVariable int id){

@@ -11,21 +11,24 @@ import java.util.*;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
+    //Queries for a list of recipes by user id
+    @Query("SELECT r FROM Recipe r WHERE r.user_id = :user_id")
+    List<Recipe> findAllRecipe(@Param("user_id") Long user_id);
+
+    //Queries for a single recipe by recipeid
+    @Query("SELECT r FROM Recipe r WHERE r.recipeid = :recipeid")
+    Recipe recipeById(@Param("recipeid")Integer recipeid);
+
+//---------------Haven't tested below this line
     @Query("SELECT r FROM Recipe r WHERE r.category LIKE :category")
     List<Recipe> getRecipeTitleByCategory(@Param("category") String category);
 
-    //Deprecated code that will now break because title is not unique.
-//    @Query("SELECT r FROM Recipe r WHERE r.title LIKE :title")
-//    Recipe recipeByTitle(@Param("title") String title);
 
     @Query("SELECT r FROM Recipe r WHERE r.user_id = :user_id")
     List<Recipe> getAllUsersRecipes(@Param("user_id") Long user_id);
 
     @Query("SELECT r FROM Recipe r WHERE r.user_id = :user_id")
     List<Recipe> findByUser(@Param("user_id") Long user_id);
-
-    @Query("SELECT r FROM Recipe r")
-    List<Recipe> findAllRecipe();
 
     @Query(value = "SELECT DISTINCT ON (title) * FROM recipe", nativeQuery = true)
     List<Recipe> getDistinctTitleRecipes();
